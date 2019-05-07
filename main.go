@@ -15,10 +15,10 @@ import (
 )
 
 const (
-	NewWriteMask = iota
-	NewReadMask  = iota << 1
-	OldWriteMask = iota << 1
-	OldReadMask  = iota << 1
+	NewWriteMask = 1
+	NewReadMask  = 1 << 1
+	OldWriteMask = 1 << 2
+	OldReadMask  = 1 << 3
 )
 
 var defaultMask = int64(OldWriteMask | OldReadMask)
@@ -32,7 +32,7 @@ func main() {
 			select {
 			case <-ctx.Done():
 			default:
-				//time.Sleep(time.Millisecond * 10)
+				time.Sleep(time.Millisecond * 10)
 			}
 		}
 	}(ctx)
@@ -42,7 +42,7 @@ func main() {
 			select {
 			case <-ctx.Done():
 			default:
-				//time.Sleep(time.Millisecond * 10)
+				time.Sleep(time.Millisecond * 10)
 			}
 		}
 	}(ctx)
@@ -76,12 +76,12 @@ func Write() {
 		}
 	}
 	if u.ID%100 == 0 {
-		fmt.Println(u.ID)
+		fmt.Printf("ID: %d, flag: %b\n", u.ID, flag)
 	}
 }
 
 func GetMigrateMask() (int64, error) {
-	i, err := redis.GetInt(common.MigrateKey)
+	i, err := redis.GetInt(common.MigrateUserKey)
 	if err != nil {
 		if err == redis2.ErrNil {
 			return defaultMask, nil
@@ -133,7 +133,7 @@ func WriteNewUser(u *user_v2.UserV2) error {
 	if u.ID != id {
 		logger.Error("new and old id not match !", id, u.ID)
 	}
-	if err = redis.SetIntNX(common.MigrateEndID, u.ID); err != nil {
+	if err = redis.SetIntNX(common.MigrateUserEndID, u.ID); err != nil {
 		return err
 	}
 	return nil
