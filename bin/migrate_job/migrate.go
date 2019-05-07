@@ -32,7 +32,7 @@ func main() {
 			continue
 		}
 		if i > 0 && i < end {
-			end = i
+			end = i-1
 		}
 		users, err := user.Select(user.ScopeIDRange(start, end))
 		if err != nil {
@@ -46,7 +46,7 @@ func main() {
 				continue
 			}
 		}
-		fmt.Printf("start: %d count: %d  proces: %.1f \n", start, end-start, float64(end)/float64(max)*100)
+		fmt.Printf("start: %d count: %d  proces: %.2f \n", start, end-start, float64(end)/float64(max)*100)
 		time.Sleep(time.Millisecond*100)
 	}
 }
