@@ -4,7 +4,7 @@
         - 高2位为 A表的读写标志
         - 低2位为 B表的读写标志
 
-`注意：代码逻辑中默认未取到redis的migrate_user 结果时，set migrate_user = 1100`
+    - `注意：代码逻辑中默认未取到redis的migrate_user 结果时，set migrate_user = 1100`
 
 * 定时任务：每隔3秒迁移A表1000条数据到B表，每次都获取redis的migrate_user_end的值，每次取ID的上限为这个值
 * 迁移步骤：
