@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	redis2 "github.com/garyburd/redigo/redis"
+	"github.com/nu7hatch/gouuid"
 	"klook.libs/logger"
-	"math/rand"
 	"migrate/common"
 	"migrate/moudle/user"
 	"migrate/moudle/user_v2"
@@ -32,7 +32,7 @@ func main() {
 			select {
 			case <-ctx.Done():
 			default:
-				time.Sleep(time.Millisecond * 10)
+				//time.Sleep(time.Millisecond * 10)
 			}
 		}
 	}(ctx)
@@ -42,7 +42,7 @@ func main() {
 			select {
 			case <-ctx.Done():
 			default:
-				time.Sleep(time.Millisecond * 10)
+				//time.Sleep(time.Millisecond * 10)
 			}
 		}
 	}(ctx)
@@ -93,12 +93,12 @@ func GetMigrateMask() (int64, error) {
 
 func WriteOldUser() (*user.User, error) {
 	var err error
-	var id = fmt.Sprint(rand.Int() % 10)
+	id, _ := uuid.NewV4()
 	u := &user.User{
-		Name:       "damon.hu -- " + id,
+		Name:       "damon.hu -- " + fmt.Sprint(id),
 		FirstName:  "damon",
 		LastName:   "hu",
-		Email:      "damon.hu" + id + "@qq.com",
+		Email:      "damon.hu" + fmt.Sprint(id) + "@qq.com",
 		Sex:        "男",
 		Flag:       99,
 		CreateTime: time.Now(),
