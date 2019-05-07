@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+gofmt -l -w .
+go build ./...
