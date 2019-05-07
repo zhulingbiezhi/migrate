@@ -10,7 +10,7 @@
 * 迁移步骤：
     - 1、上线新版本代码，等待多节点完全上线，此时读A、写A
     - 2、打开写B表的开关，此时读A、写A、写B，即set migrate_user = 1101
-        ``
+        - ``
         写入A表时，同时获取insert ID，将数据插入到B表，
         当第一条数据记录到B表时，利用redis的setnx特性，设置此时的insert ID，set migrate_user_end = ID
         ``
