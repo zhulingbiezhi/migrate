@@ -47,3 +47,11 @@ func SetIntNX(key string, val int64) error {
 	}
 	return nil
 }
+
+func SetInt(key string, val int64) error {
+	_, err := pool.Get().Do("SET", key, val)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -60,7 +60,7 @@ func (u *User) Insert() (int64, error) {
 
 func Select(scopes ...func(scope *gorm.DB) *gorm.DB) ([]*User, error) {
 	var users []*User
-	d := db.DB.Model(&User{}).Scopes(scopes...).Find(&users)
+	d := db.DB.Model(&User{}).Scopes(scopes...).Find(&users).Order("id asc")
 	if d.Error != nil {
 		if d.Error == gorm.ErrRecordNotFound {
 			return users, nil
