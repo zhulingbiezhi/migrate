@@ -16,6 +16,7 @@ func main() {
 	var endID = int64(0)
 	var curID = int64(0)
 	var max = int64(0)
+	var process = float64(0.0)
 	var err error
 	for {
 		curID, err = redis.GetInt(common.MigrateUserCurID)
@@ -77,8 +78,8 @@ func main() {
 				continue
 			}
 		}
-
-		fmt.Printf("start: %d end: %d , end_id: %d  proces: %.2f \n", start, maxID, endID, float64(end)/float64(max)*100)
+		process = float64(end)/float64(max)*100
+		fmt.Printf("start: %d end: %d , end_id: %d  proces: %.2f \n", start, maxID, endID, process)
 		time.Sleep(time.Millisecond * 100)
 	}
 }
